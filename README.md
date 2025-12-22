@@ -1,4 +1,4 @@
-# Sistema de Gestão de Dados de Saúde
+# +Salute - Sistema de Gestão de Dados de Saúde
 
 Sistema completo para gestão e centralização de dados clínicos, desenvolvido para resolver problemas de fragmentação e falta de interoperabilidade entre sistemas de saúde.
 

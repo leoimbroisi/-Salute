@@ -1,7 +1,7 @@
 {
-    "name": "health-system-backend",
+    "name": "+salute-backend",
     "version": "1.0.0",
-    "description": "Backend Next.js para sistema de gestão de dados de saúde",
+    "description": "Backend Next.js para +Salute - Sistema de Gestão de Dados de Saúde",
     "private": true,
     "scripts": {
         "dev": "next dev -p 3001",

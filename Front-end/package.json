@@ -1,7 +1,7 @@
 {
-  "name": "health-system-frontend",
+  "name": "+salute-frontend",
   "version": "1.0.0",
-  "description": "Frontend React para sistema de gestão de dados de saúde",
+  "description": "Frontend React para +Salute - Sistema de Gestão de Dados de Saúde",
   "private": true,
   "dependencies": {
     "react": "^18.2.0",
