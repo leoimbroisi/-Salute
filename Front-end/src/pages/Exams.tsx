@@ -50,6 +50,7 @@ function Exams() {
     const [filterExamDate, setFilterExamDate] = useState('');
     const [filterStartDate, setFilterStartDate] = useState('');
     const [filterEndDate, setFilterEndDate] = useState('');
+    const [filterText, setFilterText] = useState('');
 
     useEffect(() => {
         // Resetar para primeira página quando filtros mudarem
@@ -59,7 +60,7 @@ function Exams() {
             fetchExams();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterExamType, filterExamDate, filterStartDate, filterEndDate]);
+    }, [filterExamType, filterExamDate, filterStartDate, filterEndDate, filterText]);
 
     useEffect(() => {
         fetchExams();
@@ -90,6 +91,7 @@ function Exams() {
             if (filterExamDate) params.examDate = filterExamDate;
             if (filterStartDate) params.startDate = filterStartDate;
             if (filterEndDate) params.endDate = filterEndDate;
+            if (filterText) params.text = filterText;
 
             const response = await api.get('/exams', { params });
             const newExams = response.data.exams || [];
@@ -122,6 +124,7 @@ function Exams() {
         setFilterExamDate('');
         setFilterStartDate('');
         setFilterEndDate('');
+        setFilterText('');
         setPagination(prev => ({ ...prev, page: 1 }));
     };
 
@@ -224,13 +227,26 @@ function Exams() {
                     {/* Filtros */}
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
                         gap: '16px',
                         marginBottom: '24px',
                         padding: '16px',
                         backgroundColor: '#f8f9fa',
                         borderRadius: '4px'
                     }}>
+                        <div style={{ gridColumn: '1 / -1' }}>
+                            <label className="label">Busca por Conteúdo (Detalhes/IA)</label>
+                            <input
+                                type="text"
+                                className="input"
+                                value={filterText}
+                                onChange={(e) => setFilterText(e.target.value)}
+                                placeholder="Ex.: hemoglobina, laudo, conclusão, recomendação da IA"
+                            />
+                            <small style={{ color: '#666' }}>
+                                Pesquisa em dados do exame, PDF extraído e análise de IA.
+                            </small>
+                        </div>
                         <div>
                             <label className="label">Filtrar por Tipo de Exame</label>
                             <select

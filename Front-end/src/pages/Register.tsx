@@ -9,6 +9,7 @@ function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [state, setState] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ function Register() {
     setLoading(true);
 
     try {
-      const response = await api.post('/auth/register', { name, email, password });
+      const response = await api.post('/auth/register', { name, email, password, state });
       setSuccess('Conta criada com sucesso! Redirecionando...');
       login(response.data.token, response.data.user);
       setTimeout(() => {
@@ -62,6 +63,42 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+            <label className="label">Estado</label>
+            <select
+              className="input"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              required
+            >
+              <option value="" disabled>Selecione seu estado</option>
+              <option value="AC">Acre (AC)</option>
+              <option value="AL">Alagoas (AL)</option>
+              <option value="AP">Amapá (AP)</option>
+              <option value="AM">Amazonas (AM)</option>
+              <option value="BA">Bahia (BA)</option>
+              <option value="CE">Ceará (CE)</option>
+              <option value="DF">Distrito Federal (DF)</option>
+              <option value="ES">Espírito Santo (ES)</option>
+              <option value="GO">Goiás (GO)</option>
+              <option value="MA">Maranhão (MA)</option>
+              <option value="MT">Mato Grosso (MT)</option>
+              <option value="MS">Mato Grosso do Sul (MS)</option>
+              <option value="MG">Minas Gerais (MG)</option>
+              <option value="PA">Pará (PA)</option>
+              <option value="PB">Paraíba (PB)</option>
+              <option value="PR">Paraná (PR)</option>
+              <option value="PE">Pernambuco (PE)</option>
+              <option value="PI">Piauí (PI)</option>
+              <option value="RJ">Rio de Janeiro (RJ)</option>
+              <option value="RN">Rio Grande do Norte (RN)</option>
+              <option value="RS">Rio Grande do Sul (RS)</option>
+              <option value="RO">Rondônia (RO)</option>
+              <option value="RR">Roraima (RR)</option>
+              <option value="SC">Santa Catarina (SC)</option>
+              <option value="SP">São Paulo (SP)</option>
+              <option value="SE">Sergipe (SE)</option>
+              <option value="TO">Tocantins (TO)</option>
+            </select>
             <label className="label">Senha</label>
             <input
               type="password"
