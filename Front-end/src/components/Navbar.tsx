@@ -15,7 +15,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-content">
-        <div>
+        {/* <div>
           <Link 
             to="/dashboard" 
             style={{ 
@@ -27,7 +27,7 @@ function Navbar() {
           >
             <Logo size="medium" showText={true} />
           </Link>
-        </div>
+        </div> */}
         <div className="navbar-links">
           <Link to="/dashboard" className="navbar-link">
             Dashboard
