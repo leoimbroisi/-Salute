@@ -25,6 +25,7 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
       id: hit._id,
       email: hit._source.email,
       name: hit._source.name,
+      state: hit._source.state || 'DF',
       role: hit._source.role || 'user',
       createdAt: hit._source.createdAt,
     }));

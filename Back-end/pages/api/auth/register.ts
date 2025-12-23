@@ -22,10 +22,10 @@ export default async function handler(
   try {
     // Garantir que os índices existam
     await initializeIndices();
-    const { email, password, name } = req.body;
+    const { email, password, name, state } = req.body;
 
-    if (!email || !password || !name) {
-      return res.status(400).json({ error: 'Email, senha e nome são obrigatórios' });
+    if (!email || !password || !name || !state) {
+      return res.status(400).json({ error: 'Email, senha, nome e estado são obrigatórios' });
     }
 
     // Verificar se o usuário já existe
@@ -56,6 +56,7 @@ export default async function handler(
         name,
         password: hashedPassword,
         role,
+        state,
         createdAt: new Date().toISOString(),
       },
     });
@@ -69,6 +70,7 @@ export default async function handler(
         id: userId,
         email: email.toLowerCase(),
         name,
+        state,
         role,
       },
     });

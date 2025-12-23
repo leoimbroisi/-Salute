@@ -12,7 +12,7 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
       return res.status(401).json({ error: 'Não autenticado' });
     }
 
-    const { examType, examDate, startDate, endDate, page, pageSize } = req.query;
+    const { examType, examDate, startDate, endDate, page, pageSize, q, text } = req.query;
 
     // Parâmetros de paginação
     const currentPage = parseInt(page as string) || 1;
@@ -34,6 +34,19 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
     if (examType && examType !== '') {
       query.bool.must.push({
         match: { examType: examType as string },
+      });
+    }
+
+    // Filtro de texto avançado (detalhes e IA)
+    const searchText = (q as string) || (text as string) || '';
+    if (searchText && searchText.trim() !== '') {
+      query.bool.must.push({
+        multi_match: {
+          query: searchText,
+          fields: ['examData^2', 'pdfContent', 'aiAnalysis^3'],
+          type: 'best_fields',
+          operator: 'and',
+        },
       });
     }
 
@@ -131,6 +144,8 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
       examType: hit._source.examType,
       examData: hit._source.examData,
       pdfContent: hit._source.pdfContent,
+      aiAnalysis: hit._source.aiAnalysis,
+      aiAnalyzedAt: hit._source.aiAnalyzedAt,
       createdAt: hit._source.createdAt,
     }));
 

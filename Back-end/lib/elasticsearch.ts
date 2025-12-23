@@ -22,6 +22,7 @@ export async function initializeIndices() {
                             email: { type: 'keyword' },
                             name: { type: 'text' },
                             password: { type: 'keyword' },
+                            state: { type: 'keyword' },
                             role: { type: 'keyword' },
                             createdAt: { type: 'date' },
                         },

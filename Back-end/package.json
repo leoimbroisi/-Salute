@@ -7,7 +7,8 @@
         "dev": "next dev -p 3001",
         "build": "next build",
         "start": "next start -p 3001",
-        "lint": "next lint"
+        "lint": "next lint",
+        "migrate:add-state": "node scripts/migrate_users_add_state_df.js"
     },
     "dependencies": {
         "next": "^14.0.0",

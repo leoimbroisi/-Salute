@@ -72,6 +72,7 @@ export default async function handler(
         id: userId,
         email: user.email,
         name: user.name,
+        state: user.state || 'DF',
         role,
       },
     });
