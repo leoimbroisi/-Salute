@@ -52,7 +52,7 @@ export default async function handler(
     if (!role) {
       const adminEmail = 'leonardo.imbroisi@gmail.com';
       role = user.email.toLowerCase() === adminEmail.toLowerCase() ? 'admin' : 'user';
-      
+
       // Atualizar o usuário no banco com o role correto
       await client.update({
         index: 'users',

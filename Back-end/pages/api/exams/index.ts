@@ -45,7 +45,7 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase();
-      
+
       query.bool.must.push({
         bool: {
           should: [
