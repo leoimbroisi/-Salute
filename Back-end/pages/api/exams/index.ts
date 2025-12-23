@@ -40,12 +40,40 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
     // Filtro de texto avançado (detalhes e IA)
     const searchText = (q as string) || (text as string) || '';
     if (searchText && searchText.trim() !== '') {
+      // Normalizar texto de busca removendo acentos
+      const normalizedText = searchText
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+      
       query.bool.must.push({
-        multi_match: {
-          query: searchText,
-          fields: ['examData^2', 'pdfContent', 'aiAnalysis^3'],
-          type: 'best_fields',
-          operator: 'and',
+        bool: {
+          should: [
+            {
+              multi_match: {
+                query: searchText,
+                fields: ['examData^2', 'pdfContent', 'aiAnalysis^3'],
+                type: 'phrase_prefix',
+                operator: 'or',
+              },
+            },
+            {
+              multi_match: {
+                query: normalizedText,
+                fields: ['examData^2', 'pdfContent', 'aiAnalysis^3'],
+                type: 'phrase_prefix',
+                operator: 'or',
+              },
+            },
+            {
+              multi_match: {
+                query: searchText,
+                fields: ['examData', 'pdfContent', 'aiAnalysis'],
+                fuzziness: 'AUTO',
+              },
+            },
+          ],
+          minimum_should_match: 1,
         },
       });
     }
