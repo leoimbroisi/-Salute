@@ -25,6 +25,9 @@ function Users() {
     password: '',
   });
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetchUsers();
@@ -90,18 +93,43 @@ function Users() {
     }
   };
 
-  const deleteUser = async (user: User) => {
-    const ok = window.confirm('vc tem certeza?');
-    if (!ok) return;
+  const handleDeleteClick = (user: User) => {
+    setUserToDelete(user);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!userToDelete) return;
+
+    setDeleting(true);
+    setError('');
+
     try {
-      setError('');
-      await api.delete(`/users/${user.id}`);
-      // Pequeno atraso para o backend processar a exclusão
+      // Fazer a exclusão
+      await api.delete(`/users/${userToDelete.id}`);
+
+      // Fechar modal
+      setShowDeleteModal(false);
+      setUserToDelete(null);
+
+      // Aguardar um pouco para garantir que o Elasticsearch processe a exclusão
       await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Disparar atualização através do estado refreshTrigger
       setRefreshTrigger(prev => prev + 1);
+
     } catch (err: any) {
       setError(err.response?.data?.error || err.message || 'Erro ao excluir usuário');
+      setShowDeleteModal(false);
+      setUserToDelete(null);
+    } finally {
+      setDeleting(false);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+    setUserToDelete(null);
   };
 
   return (
@@ -153,7 +181,7 @@ function Users() {
                       <td>{new Date(user.createdAt).toLocaleDateString('pt-BR')}</td>
                       <td>
                         <button className="button" style={{ marginRight: '8px' }} onClick={() => startEdit(user)}>Editar</button>
-                        <button className="button" style={{ backgroundColor: '#dc3545' }} onClick={() => deleteUser(user)}>Excluir</button>
+                        <button className="button" style={{ backgroundColor: '#dc3545' }} onClick={() => handleDeleteClick(user)}>Excluir</button>
                       </td>
                     </tr>
                   ))
@@ -220,6 +248,98 @@ function Users() {
               <div style={{ marginTop: '12px' }}>
                 <button className="button" style={{ marginRight: '8px' }} onClick={saveEdit}>Salvar</button>
                 <button className="button" style={{ backgroundColor: '#6c757d' }} onClick={cancelEdit}>Cancelar</button>
+              </div>
+            </div>
+          )}
+
+          {/* Modal de Confirmação de Exclusão */}
+          {showDeleteModal && userToDelete && (
+            <div
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1001,
+                padding: '20px',
+              }}
+              onClick={handleCancelDelete}
+            >
+              <div
+                style={{
+                  backgroundColor: 'white',
+                  borderRadius: '8px',
+                  padding: '24px',
+                  maxWidth: '500px',
+                  width: '100%',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div style={{ marginBottom: '20px' }}>
+                  <h2 style={{ color: '#dc3545', marginBottom: '12px' }}>⚠️ Confirmar Exclusão</h2>
+                  <p style={{ color: '#666', lineHeight: '1.6' }}>
+                    Tem certeza que deseja excluir este usuário?
+                  </p>
+                  <div
+                    style={{
+                      marginTop: '16px',
+                      padding: '12px',
+                      backgroundColor: '#f8f9fa',
+                      borderRadius: '4px',
+                      borderLeft: '4px solid #dc3545',
+                    }}
+                  >
+                    <div><strong>Nome:</strong> {userToDelete.name}</div>
+                    <div style={{ marginTop: '8px' }}>
+                      <strong>Email:</strong> {userToDelete.email}
+                    </div>
+                    <div style={{ marginTop: '8px' }}>
+                      <strong>Estado:</strong> {userToDelete.state || 'DF'}
+                    </div>
+                    <div style={{ marginTop: '8px' }}>
+                      <strong>Perfil:</strong> {userToDelete.role === 'admin' ? 'Administrador' : 'Usuário'}
+                    </div>
+                  </div>
+                  <p style={{ color: '#dc3545', marginTop: '16px', fontWeight: 'bold' }}>
+                    Esta ação não pode ser desfeita!
+                  </p>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+                  <button
+                    className="button button-secondary"
+                    onClick={handleCancelDelete}
+                    disabled={deleting}
+                  >
+                    ❌ Cancelar
+                  </button>
+                  <button
+                    className="button"
+                    onClick={handleConfirmDelete}
+                    disabled={deleting}
+                    style={{
+                      backgroundColor: '#dc3545',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!deleting) {
+                        e.currentTarget.style.backgroundColor = '#c82333';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!deleting) {
+                        e.currentTarget.style.backgroundColor = '#dc3545';
+                      }
+                    }}
+                  >
+                    {deleting ? '⏳ Excluindo...' : '🗑️ Sim, Excluir'}
+                  </button>
+                </div>
               </div>
             </div>
           )}

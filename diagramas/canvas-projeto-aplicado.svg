@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" style="background:#111">
+  <style>
+    .title{fill:#fff;font-family:Arial, Helvetica, sans-serif;font-size:24px;font-weight:bold}
+    .cardTitle{fill:#fff;font-family:Arial, Helvetica, sans-serif;font-size:18px;font-weight:bold}
+    .text{fill:#fff;font-family:Arial, Helvetica, sans-serif;font-size:14px}
+    .green{fill:#00C853;stroke:#007B3E;stroke-width:2}
+    .teal{fill:#00BFA5;stroke:#00796B;stroke-width:2}
+    .blue{fill:#1976D2;stroke:#0D47A1;stroke-width:2}
+    .dark{fill:#222;stroke:#303030;stroke-width:2}
+    .ref{fill:#263238;stroke:#303030;stroke-width:2}
+  </style>
+
+  <!-- Título -->
+  <rect x="40" y="10" width="1500" height="40" rx="8" class="dark"/>
+  <text x="60" y="37" class="title">+Salute — Plataforma de Saúde Integral (v1.0)</text>
+  <!-- Logo bloco -->
+  <rect x="50" y="14" width="120" height="32" rx="6" class="ref"/>
+  <text x="60" y="35" class="text">Logo +Salute</text>
+
+  <!-- Linha superior -->
+  <rect x="40" y="70" width="360" height="260" rx="12" class="green"/>
+  <text x="60" y="95" class="cardTitle">Análise de Contexto</text>
+  <text x="60" y="120" class="text">• Dados clínicos dispersos e baixa interoperabilidade.</text>
+  <text x="60" y="145" class="text">• Dificuldade em consolidar histórico e decisões baseadas em dados.</text>
+  <text x="60" y="170" class="text">• Proposta: plataforma centralizada com Elasticsearch + Kibana.</text>
+
+  <rect x="420" y="70" width="360" height="260" rx="12" class="green"/>
+  <text x="440" y="95" class="cardTitle">Personas</text>
+  <text x="440" y="120" class="text">• Paciente adulto: acesso simples e seguro ao histórico.</text>
+  <text x="440" y="145" class="text">• Profissional: filtros por período/tipo para decisões rápidas.</text>
+  <text x="440" y="170" class="text">• Administrador: gestão de usuários e conformidade.</text>
+
+  <rect x="800" y="70" width="360" height="260" rx="12" class="green"/>
+  <text x="820" y="95" class="cardTitle">Premissas e Restrições</text>
+  <text x="820" y="120" class="text">• Paciente dono dos dados; JWT e roles.</text>
+  <text x="820" y="145" class="text">• APIs: /api/auth, /api/users, /api/exams.</text>
+  <text x="820" y="170" class="text">• LGPD: segurança, privacidade e segregação por usuário.</text>
+  <text x="820" y="195" class="text">• Requisitos: Docker, Node 18+, Elasticsearch/Kibana.</text>
+
+  <rect x="1180" y="70" width="360" height="260" rx="12" class="teal"/>
+  <text x="1200" y="95" class="cardTitle">Backlog (MVP + Próximos)</text>
+  <text x="1200" y="120" class="text">Implementado:</text>
+  <text x="1200" y="140" class="text">• Login/Cadastro, roles, admin.</text>
+  <text x="1200" y="160" class="text">• Upload PDF, manual, listagem, filtros e exclusão.</text>
+  <text x="1200" y="180" class="text">• IA: aiAnalysis / aiAnalyzedAt.</text>
+  <text x="1200" y="200" class="text">• Índices users/exams e dashboards Kibana.</text>
+  <text x="1200" y="225" class="text">Evoluções: lote, integrações, consentimento, catálogo,</text>
+  <text x="1200" y="245" class="text">notificações/compartilhamento e predição com IA.</text>
+
+  <!-- Linha inferior esquerda -->
+  <rect x="40" y="360" width="360" height="260" rx="12" class="green"/>
+  <text x="60" y="385" class="cardTitle">Benefícios e Justificativas</text>
+  <text x="60" y="410" class="text">• Histórico consolidado; menos fragmentação.</text>
+  <text x="60" y="435" class="text">• Decisões apoiadas por dados/visualizações.</text>
+  <text x="60" y="460" class="text">• Menos redundância; mais produtividade.</text>
+  <text x="60" y="485" class="text">• Base preparada para IA preditiva.</text>
+
+  <rect x="420" y="360" width="360" height="260" rx="12" class="green"/>
+  <text x="440" y="385" class="cardTitle">Hipóteses</text>
+  <text x="440" y="410" class="text">• Consulta mais rápida com filtros/ordenação.</text>
+  <text x="440" y="435" class="text">• Profissionais decidem melhor com histórico/visualizações.</text>
+  <text x="440" y="460" class="text">• Elasticsearch facilita análises e IA futura.</text>
+
+  <rect x="800" y="360" width="360" height="260" rx="12" class="green"/>
+  <text x="820" y="385" class="cardTitle">Objetivo S.M.A.R.T</text>
+  <text x="820" y="410" class="text">• Centralizar histórico por usuário (12 meses).</text>
+  <text x="820" y="435" class="text">• Latência &lt; 1s em consultas típicas.</text>
+  <text x="820" y="460" class="text">• Dashboards operacionais no Kibana.</text>
+  <text x="820" y="485" class="text">• Dados/APIs preparados para IA.</text>
+  <text x="820" y="510" class="text">Métricas: ≥95% &lt;1s; ≥80% uso filtros; 100% metadados.</text>
+
+  <!-- Coluna direita grande -->
+  <rect x="1180" y="360" width="360" height="540" rx="12" class="blue"/>
+  <text x="1200" y="385" class="cardTitle">Área de Experimentação</text>
+  <text x="1200" y="410" class="text">• Docker Compose (ES/Kibana), BE 3001, FE 3000.</text>
+  <text x="1200" y="435" class="text">• Discover/Data Views e Dashboards (Kibana).</text>
+  <text x="1200" y="470" class="cardTitle">Resultado (Esperado)</text>
+  <text x="1200" y="495" class="text">• Assistência melhor, diagnósticos rápidos, redução de custos.</text>
+  <text x="1200" y="520" class="text">• Base para medicina preditiva.</text>
+  <text x="1200" y="555" class="cardTitle">Solução (Arquitetura)</text>
+  <text x="1200" y="580" class="text">• FE: React+Vite+TS; rotas protegidas, filtros.</text>
+  <text x="1200" y="605" class="text">• BE: Next.js+TS; /pages/api com JWT.</text>
+  <text x="1200" y="630" class="text">• DB: Elasticsearch (users/exams), campos IA.</text>
+  <text x="1200" y="655" class="text">• Observação: Kibana para visualização/insights.</text>
+  <text x="1200" y="690" class="cardTitle">Lições Aprendidas</text>
+  <text x="1200" y="715" class="text">• Interoperabilidade/padronização são cruciais.</text>
+  <text x="1200" y="740" class="text">• Segurança/privacidade contínuas (LGPD, roles).</text>
+  <text x="1200" y="765" class="text">• Valor na continuidade do histórico e estrutura para IA.</text>
+
+  <!-- Referências técnicas -->
+  <rect x="40" y="640" width="1120" height="80" rx="8" class="ref"/>
+  <text x="60" y="665" class="cardTitle">Arquivos-chave</text>
+  <text x="60" y="690" class="text">• Back-end/lib/elasticsearch.ts • Back-end/middleware/auth.ts • Back-end/pages/api/exams/* • Front-end/src/services/api.ts</text>
+</svg>

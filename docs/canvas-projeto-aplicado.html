@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>+Salute — Canvas do Projeto Aplicado</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --text: #ffffff;
+      --muted: #cfead6;
+      --card-green: #00C853;
+      --card-green-border: #007B3E;
+      --card-teal: #00BFA5;
+      --card-teal-border: #00796B;
+      --card-blue: #1976D2;
+      --card-blue-border: #0D47A1;
+      --card-dark: #222222;
+      --card-dark-border: #303030;
+      --ref-bg: #263238;
+      --ref-border: #303030;
+      --radius: 16px;
+      --shadow: 0 6px 24px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Ubuntu, "Helvetica Neue", Arial, sans-serif; }
+    .container { max-width: 1320px; margin: 0 auto; padding: 24px; }
+    .header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .logo { background: var(--ref-bg); color: var(--text); border: 2px solid var(--ref-border); border-radius: 8px; padding: 8px 12px; font-weight: 600; }
+    .title { flex: 1; background: var(--card-dark); border: 2px solid var(--card-dark-border); color: var(--text); border-radius: 10px; padding: 12px 16px; font-size: 20px; font-weight: 700; }
+
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .row { margin-top: 20px; }
+    .card { border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 18px 16px; border: 2px solid transparent; }
+    .card h3 { margin: 0 0 10px; font-size: 16px; letter-spacing: .2px; }
+    .card p, .card ul { margin: 0; font-size: 14px; line-height: 1.45; }
+    .card ul { padding-left: 18px; }
+
+    .green { background: var(--card-green); border-color: var(--card-green-border); }
+    .teal  { background: var(--card-teal);  border-color: var(--card-teal-border); }
+    .blue  { background: var(--card-blue);  border-color: var(--card-blue-border); }
+
+    .blue-column { grid-column: 4 / 5; grid-row: 1 / span 3; display: grid; gap: 16px; grid-template-rows: auto 1fr; }
+    .blue .section h4 { margin: 0 0 6px; font-size: 15px; }
+    .blue .section { background: rgba(0,0,0,0.12); border-radius: 12px; padding: 12px; }
+
+    .refs { background: var(--ref-bg); border: 2px solid var(--ref-border); border-radius: 10px; padding: 10px 14px; margin-top: 18px; }
+    .refs code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 6px; }
+
+    @media (max-width: 1080px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .blue-column { grid-column: 1 / -1; grid-row: auto; }
+    }
+    @media (max-width: 680px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="header">
+      <div class="logo">+Salute</div>
+      <div class="title">Canvas do Projeto Aplicado — Plataforma de Saúde Integral (Versão 1.0)</div>
+    </div>
+
+    <!-- Linha superior: 4 cartões -->
+    <section class="grid">
+      <article class="card green">
+        <h3>Desafio / Problema</h3>
+        <ul>
+          <li>Dados clínicos fragmentados em múltiplos sistemas independentes.</li>
+          <li>Baixa interoperabilidade e ausência de padronização.</li>
+          <li>Dificuldade de acesso ao histórico completo e continuidade do cuidado.</li>
+          <li>Repetição de exames e risco de decisões com dados incompletos.</li>
+        </ul>
+      </article>
+
+      <article class="card green">
+        <h3>Contexto</h3>
+        <ul>
+          <li>Digitalização ocorreu de forma descentralizada e pouco integrada.</li>
+          <li>Demanda crescente por segurança, privacidade e LGPD.</li>
+          <li>Compartilhamento de informações clínicas é complexo e arriscado.</li>
+          <li>Necessidade de solução centrada no paciente, segura e estruturada.</li>
+        </ul>
+      </article>
+
+      <article class="card green">
+        <h3>Personas</h3>
+        <ul>
+          <li><strong>Paciente</strong>: valoriza segurança, praticidade e autonomia sobre os dados.</li>
+          <li><strong>Profissional de Saúde</strong>: precisa de dados confiáveis e integrados para diagnósticos mais rápidos.</li>
+          <li><strong>Administrador</strong>: controla usuários, monitora uso e garante conformidade (LGPD, segurança).</li>
+        </ul>
+      </article>
+
+      <!-- Coluna azul posicionada à direita desde a primeira linha -->
+      <section class="blue-column">
+        <article class="card blue">
+          <h3>Área de Experimentação</h3>
+          <div class="section">
+            <h4>Proposta de Valor</h4>
+            <p>Plataforma digital segura e centrada no paciente para centralizar, organizar e visualizar exames e informações clínicas em um único ambiente.</p>
+          </div>
+          <div class="section">
+            <h4>Solução Proposta</h4>
+            <ul>
+              <li>Front-end para pacientes e profissionais, com acesso autenticado.</li>
+              <li>Back-end baseado em APIs REST.</li>
+              <li>Armazenamento dos dados clínicos em Elasticsearch.</li>
+              <li>Visualização e análise via Kibana.</li>
+              <li>Estrutura preparada para integração futura com IA.</li>
+            </ul>
+          </div>
+          <div class="section">
+            <h4>Ambiente</h4>
+            <ul>
+              <li>Docker Compose: Elasticsearch (9200) e Kibana (5601).</li>
+              <li>Back-end Next.js (porta 3001) e Front-end Vite (porta 3000).</li>
+              <li>Discover/Data Views e Dashboards conforme guia Kibana.</li>
+            </ul>
+          </div>
+          <div class="section">
+            <h4>Restrições e Riscos</h4>
+            <ul>
+              <li>Complexidade de interoperabilidade com sistemas externos.</li>
+              <li>Dependência de adesão de usuários e parceiros.</li>
+              <li>Conformidade regulatória e segurança contínuas.</li>
+            </ul>
+          </div>
+          <div class="section">
+            <h4>Resultado Esperado</h4>
+            <ul>
+              <li>Melhoria da qualidade assistencial; diagnósticos mais rápidos.</li>
+              <li>Redução de custos; base para medicina preventiva e preditiva.</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <article class="card green row">
+        <h3>Necessidades</h3>
+        <ul>
+          <li>Centralização segura do histórico de saúde.</li>
+          <li>Acesso simples, rápido e controlado às informações clínicas.</li>
+          <li>Visão longitudinal do paciente.</li>
+          <li>Ferramentas de busca, filtros e organização dos dados.</li>
+          <li>Conformidade com LGPD e boas práticas de segurança.</li>
+        </ul>
+      </article>
+
+      <article class="card green row">
+        <h3>Premissas e Restrições</h3>
+        <ul>
+          <li>Paciente é dono dos dados; autenticação via JWT e roles.</li>
+          <li>APIs REST: <code>/api/auth</code>, <code>/api/users</code>, <code>/api/exams</code>.</li>
+          <li>LGPD: segurança, privacidade e segregação por usuário.</li>
+          <li>Requisitos: Docker/Compose, Node 18+, Elasticsearch e Kibana.</li>
+        </ul>
+      </article>
+
+      <article class="card teal row">
+        <h3>Backlog (MVP + Funcionalidades-Chave)</h3>
+        <p><strong>MVP:</strong></p>
+        <ul>
+          <li>Cadastro e autenticação de usuários.</li>
+          <li>Controle de acesso por perfil (paciente, profissional, admin).</li>
+          <li>Upload e cadastro de exames clínicos.</li>
+          <li>Listagem e busca de exames com filtros por tipo e período.</li>
+          <li>Visualização do histórico clínico consolidado.</li>
+        </ul>
+        <p><strong>Próximos:</strong></p>
+        <ul>
+          <li>Integrações externas, consentimento e auditoria.</li>
+          <li>Catálogo de tipos e normalização semântica.</li>
+          <li>Predição com IA e explicabilidade.</li>
+        </ul>
+      </article>
+
+      <!-- Linha inferior: 3 cartões + coluna azul -->
+      <article class="card green row">
+        <h3>Benefícios Esperados</h3>
+        <ul>
+          <li>Melhoria da qualidade assistencial.</li>
+          <li>Redução de custos operacionais.</li>
+          <li>Apoio à decisão clínica baseada em dados.</li>
+          <li>Base estruturada para medicina preventiva e preditiva.</li>
+        </ul>
+      </article>
+
+      <article class="card green row">
+        <h3>Hipóteses</h3>
+        <ul>
+          <li>A centralização do histórico clínico melhora a continuidade do cuidado.</li>
+          <li>Pacientes engajam mais quando têm controle sobre seus dados.</li>
+          <li>Profissionais tomam decisões mais assertivas com dados consolidados.</li>
+          <li>Dados estruturados viabilizam análises e uso futuro de IA.</li>
+        </ul>
+      </article>
+
+      <article class="card green row">
+        <h3>Objetivos S.M.A.R.T</h3>
+        <ul>
+          <li>Centralizar o histórico clínico por paciente com segurança e privacidade.</li>
+          <li>Garantir consultas com tempo de resposta &lt; 1s em cenários típicos.</li>
+          <li>Aumentar o uso de filtros e buscas no histórico clínico.</li>
+          <li>Reduzir repetição de exames e ampliar dados consolidados por paciente.</li>
+        </ul>
+        <p><strong>Métricas de Sucesso:</strong> tempo &lt; 1s; aumento do uso de filtros; redução de repetição; crescimento do volume de dados por paciente.</p>
+      </article>
+
+      <!-- (a coluna azul foi movida para o topo e expandida) -->
+    </section>
+
+    <div class="refs">
+      <strong>Arquivos-chave:</strong>
+      <div>
+        <code>02-projeto/Back-end/lib/elasticsearch.ts</code> ·
+        <code>02-projeto/Back-end/middleware/auth.ts</code> ·
+        <code>02-projeto/Back-end/pages/api/exams/*</code> ·
+        <code>02-projeto/Front-end/src/services/api.ts</code>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

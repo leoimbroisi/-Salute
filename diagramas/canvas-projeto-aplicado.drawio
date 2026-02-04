@@ -1,0 +1,60 @@
+<mxfile host="app.diagrams.net" modified="2025-12-24T00:00:00Z" agent="Mozilla/5.0 (Macintosh) VSCode-Copilot" version="20.3.3" type="device">
+  <diagram id="canvas-salute" name="Canvas +Salute">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" background="#111111">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- Título -->
+        <mxCell id="title" value="+Salute — Plataforma de Saúde Integral (v1.0)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=20;fontColor=#ffffff;strokeColor=#303030;fillColor=#222222;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="1500" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Logo / Marca -->
+        <mxCell id="logo" value="Logo +Salute" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontColor=#ffffff;strokeColor=#303030;fillColor=#263238;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="50" y="14" width="120" height="32" as="geometry"/>
+        </mxCell>
+        
+        <!-- Linha superior -->
+        <mxCell id="analise" value="Análise de Contexto&#xa;• Dados clínicos dispersos e baixa interoperabilidade.&#xa;• Dificuldade em consolidar histórico e decisões baseadas em dados.&#xa;• Proposta: plataforma centralizada com Elasticsearch + Kibana." style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontColor=#ffffff;strokeColor=#007B3E;fillColor=#00C853;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="360" height="260" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="personas" value="Personas&#xa;• Paciente adulto: acesso simples e seguro ao histórico.&#xa;• Profissional de saúde: filtros por período/tipo para decisões rápidas.&#xa;• Administrador: gestão de usuários e conformidade." style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontColor=#ffffff;strokeColor=#007B3E;fillColor=#00C853;" vertex="1" parent="1">
+          <mxGeometry x="420" y="70" width="360" height="260" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="premissas" value="Premissas e Restrições&#xa;• Paciente dono dos dados; acesso via JWT e roles.&#xa;• APIs REST: /api/auth, /api/users, /api/exams.&#xa;• LGPD: segurança, privacidade e segregação por usuário.&#xa;• Requisitos: Docker, Node 18+, Elasticsearch/Kibana." style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontColor=#ffffff;strokeColor=#007B3E;fillColor=#00C853;" vertex="1" parent="1">
+          <mxGeometry x="800" y="70" width="360" height="260" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="backlog" value="Backlog (MVP + Próximos)&#xa;Implementado:&#xa;• Cadastro/Login, roles e acesso admin.&#xa;• Upload PDF (extração), cadastro manual, listagem, filtros e exclusão.&#xa;• Campos de IA: aiAnalysis / aiAnalyzedAt.&#xa;• Índices users/exams e dashboards Kibana.&#xa;Evoluções:&#xa;• Importação em lote; integrações clínicas/labs.&#xa;• Consentimento e auditoria.&#xa;• Catálogo de tipos e normalização.&#xa;• Notificações e compartilhamento seguro.&#xa;• Predição com IA e explicabilidade." style="rounded=1;whiteSpace=wrap;html=1;fontSize=13;fontColor=#ffffff;strokeColor=#00796B;fillColor=#00BFA5;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="70" width="360" height="260" as="geometry"/>
+        </mxCell>
+        
+        <!-- Linha inferior esquerda -->
+        <mxCell id="beneficios" value="Benefícios e Justificativas&#xa;• Histórico consolidado, redução de fragmentação.&#xa;• Decisões clínicas apoiadas por dados e visualizações.&#xa;• Menos redundância, mais produtividade.&#xa;• Base preparada para IA preditiva." style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontColor=#ffffff;strokeColor=#007B3E;fillColor=#00C853;" vertex="1" parent="1">
+          <mxGeometry x="40" y="360" width="360" height="260" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="hipoteses" value="Hipóteses&#xa;• Consulta mais rápida e confiável com filtros/ordenação.&#xa;• Profissionais decidem melhor com histórico e visualizações.&#xa;• Elasticsearch viabiliza análises e IA futura." style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontColor=#ffffff;strokeColor=#007B3E;fillColor=#00C853;" vertex="1" parent="1">
+          <mxGeometry x="420" y="360" width="360" height="260" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="smart" value="Objetivo S.M.A.R.T&#xa;Em até 12 meses:&#xa;• Centralizar histórico por usuário com autenticação segura.&#xa;• Filtros e detalhamento com latência < 1s em consultas típicas.&#xa;• Dashboards operacionais no Kibana.&#xa;• Dados/APIs preparados para IA preditiva.&#xa;Métricas:&#xa;• ≥95% consultas <1s; ≥80% usuários usando filtros/semana; 100% exames com metadados mínimos." style="rounded=1;whiteSpace=wrap;html=1;fontSize=13;fontColor=#ffffff;strokeColor=#007B3E;fillColor=#00C853;" vertex="1" parent="1">
+          <mxGeometry x="800" y="360" width="360" height="260" as="geometry"/>
+        </mxCell>
+        
+        <!-- Coluna direita grande -->
+        <mxCell id="experimentos" value="Área de Experimentação&#xa;• Ambiente local: Docker Compose (Elasticsearch/Kibana), BE 3001, FE 3000.&#xa;• Discover/Data Views e Dashboards conforme guia Kibana.&#xa;— — —&#xa;Resultado (Esperado)&#xa;• Melhor qualidade assistencial; diagnósticos mais rápidos; redução de custos; base para medicina preditiva.&#xa;— — —&#xa;Solução (Arquitetura)&#xa;• FE: React+Vite+TS; rotas protegidas e filtros.&#xa;• BE: Next.js+TS; /pages/api com JWT (middleware).&#xa;• DB: Elasticsearch (users/exams), campos IA.&#xa;• Observação: Kibana para visualização e insights.&#xa;— — —&#xa;Lições Aprendidas&#xa;• Interoperabilidade e padronização são cruciais.&#xa;• Segurança/privacidade contínuas (LGPD, roles).&#xa;• Valor está na continuidade do histórico e estrutura para IA." style="rounded=1;whiteSpace=wrap;html=1;fontSize=13;fontColor=#ffffff;strokeColor=#0D47A1;fillColor=#1976D2;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="360" width="360" height="540" as="geometry"/>
+        </mxCell>
+        
+        <!-- Referências técnicas -->
+        <mxCell id="refs" value="Arquivos-chave&#xa;• Back-end/lib/elasticsearch.ts&#xa;• Back-end/middleware/auth.ts&#xa;• Back-end/pages/api/exams/*&#xa;• Front-end/src/services/api.ts" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontColor=#ffffff;strokeColor=#303030;fillColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="1120" height="80" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
