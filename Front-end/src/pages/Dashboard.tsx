@@ -16,16 +16,16 @@ function Dashboard() {
             <Logo size="large" showText={true} />
           </div>
           <h1 style={{ textAlign: 'center' }}>Bem-vindo, {user?.name}!</h1>
-          <p style={{ marginTop: '16px', color: '#666', textAlign: 'center' }}>
+          <p style={{ marginTop: '16px', color: 'var(--neutral-500)', textAlign: 'center' }}>
             Sistema de Gestão de Dados de Saúde
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
           {user?.role === 'admin' && (
             <div className="card">
-              <h2 style={{ marginBottom: '16px' }}>Usuários</h2>
-              <p style={{ marginBottom: '16px', color: '#666' }}>
+              <h2 style={{ marginBottom: '12px' }}>Usuários</h2>
+              <p style={{ marginBottom: '16px', color: 'var(--neutral-500)', fontSize: '14px' }}>
                 Visualize e gerencie todos os usuários do sistema
               </p>
               <Link to="/users" className="button">
@@ -35,8 +35,8 @@ function Dashboard() {
           )}
 
           <div className="card">
-            <h2 style={{ marginBottom: '16px' }}>Meus Exames</h2>
-            <p style={{ marginBottom: '16px', color: '#666' }}>
+            <h2 style={{ marginBottom: '12px' }}>Meus Exames</h2>
+            <p style={{ marginBottom: '16px', color: 'var(--neutral-500)', fontSize: '14px' }}>
               Visualize e filtre todos os seus exames cadastrados
             </p>
             <Link to="/exams" className="button">
@@ -45,8 +45,8 @@ function Dashboard() {
           </div>
 
           <div className="card">
-            <h2 style={{ marginBottom: '16px' }}>Upload de PDF</h2>
-            <p style={{ marginBottom: '16px', color: '#666' }}>
+            <h2 style={{ marginBottom: '12px' }}>Upload de PDF</h2>
+            <p style={{ marginBottom: '16px', color: 'var(--neutral-500)', fontSize: '14px' }}>
               Envie um PDF de exame para extração automática de dados
             </p>
             <Link to="/upload-exam" className="button">
@@ -55,8 +55,8 @@ function Dashboard() {
           </div>
 
           <div className="card">
-            <h2 style={{ marginBottom: '16px' }}>Cadastro Manual</h2>
-            <p style={{ marginBottom: '16px', color: '#666' }}>
+            <h2 style={{ marginBottom: '12px' }}>Cadastro Manual</h2>
+            <p style={{ marginBottom: '16px', color: 'var(--neutral-500)', fontSize: '14px' }}>
               Cadastre dados de exame manualmente
             </p>
             <Link to="/manual-exam" className="button">
@@ -70,4 +70,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-

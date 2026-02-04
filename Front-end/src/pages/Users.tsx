@@ -46,7 +46,6 @@ function Users() {
     }
   };
 
-  // Recarregar lista quando solicitado (padrão usado em Exames)
   useEffect(() => {
     if (refreshTrigger > 0) {
       fetchUsers();
@@ -85,7 +84,6 @@ function Users() {
       }
       await api.put(`/users/${editingUser.id}`, payload);
       cancelEdit();
-      // Pequeno atraso para o backend aplicar a atualização (consistência)
       await new Promise(resolve => setTimeout(resolve, 500));
       setRefreshTrigger(prev => prev + 1);
     } catch (err: any) {
@@ -105,17 +103,13 @@ function Users() {
     setError('');
 
     try {
-      // Fazer a exclusão
       await api.delete(`/users/${userToDelete.id}`);
 
-      // Fechar modal
       setShowDeleteModal(false);
       setUserToDelete(null);
 
-      // Aguardar um pouco para garantir que o Elasticsearch processe a exclusão
       await new Promise(resolve => setTimeout(resolve, 500));
 
-      // Disparar atualização através do estado refreshTrigger
       setRefreshTrigger(prev => prev + 1);
 
     } catch (err: any) {
@@ -140,7 +134,10 @@ function Users() {
           <h1>Lista de Usuários</h1>
           {error && <div className="error">{error}</div>}
           {loading ? (
-            <p>Carregando...</p>
+            <div className="loading-container">
+              <div className="loading-spinner"></div>
+              <p>Carregando usuários...</p>
+            </div>
           ) : (
             <table className="table">
               <thead>
@@ -156,7 +153,7 @@ function Users() {
               <tbody>
                 {users.length === 0 ? (
                   <tr>
-                    <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
+                    <td colSpan={6} style={{ textAlign: 'center', padding: '32px', color: 'var(--neutral-500)' }}>
                       Nenhum usuário encontrado
                     </td>
                   </tr>
@@ -167,21 +164,20 @@ function Users() {
                       <td>{user.email}</td>
                       <td>{user.state || 'DF'}</td>
                       <td>
-                        <span style={{
-                          padding: '4px 8px',
-                          borderRadius: '4px',
-                          backgroundColor: user.role === 'admin' ? '#007bff' : '#6c757d',
-                          color: 'white',
-                          fontSize: '12px',
-                          fontWeight: 'bold'
-                        }}>
+                        <span className={user.role === 'admin' ? 'badge badge-primary' : 'badge badge-neutral'}>
                           {user.role === 'admin' ? 'Administrador' : 'Usuário'}
                         </span>
                       </td>
                       <td>{new Date(user.createdAt).toLocaleDateString('pt-BR')}</td>
                       <td>
-                        <button className="button" style={{ marginRight: '8px' }} onClick={() => startEdit(user)}>Editar</button>
-                        <button className="button" style={{ backgroundColor: '#dc3545' }} onClick={() => handleDeleteClick(user)}>Excluir</button>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button className="button button-sm" onClick={() => startEdit(user)}>
+                            Editar
+                          </button>
+                          <button className="button button-danger button-sm" onClick={() => handleDeleteClick(user)}>
+                            Excluir
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -189,21 +185,22 @@ function Users() {
               </tbody>
             </table>
           )}
+
           {editingUser && (
-            <div style={{ marginTop: '20px' }}>
-              <h2>Editar Usuário</h2>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div style={{ marginTop: '24px', padding: '20px', backgroundColor: 'var(--neutral-50)', borderRadius: 'var(--radius-md)', border: '1px solid var(--neutral-200)' }}>
+              <h2 style={{ marginBottom: '16px' }}>Editar Usuário</h2>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
                 <div>
                   <label className="label">Nome</label>
-                  <input className="input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                  <input className="input" style={{ marginBottom: 0 }} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                 </div>
                 <div>
                   <label className="label">Email</label>
-                  <input className="input" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                  <input className="input" style={{ marginBottom: 0 }} type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
                 </div>
                 <div>
                   <label className="label">Estado</label>
-                  <select className="input" value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })}>
+                  <select className="input" style={{ marginBottom: 0 }} value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })}>
                     <option value="AC">Acre (AC)</option>
                     <option value="AL">Alagoas (AL)</option>
                     <option value="AP">Amapá (AP)</option>
@@ -235,66 +232,40 @@ function Users() {
                 </div>
                 <div>
                   <label className="label">Perfil</label>
-                  <select className="input" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
+                  <select className="input" style={{ marginBottom: 0 }} value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
                     <option value="user">Usuário</option>
                     <option value="admin">Administrador</option>
                   </select>
                 </div>
                 <div>
-                  <label className="label">Senha (opcional, min 6)</label>
-                  <input className="input" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+                  <label className="label">Nova Senha (opcional, mín. 6 caracteres)</label>
+                  <input className="input" style={{ marginBottom: 0 }} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Deixe em branco para manter" />
                 </div>
               </div>
-              <div style={{ marginTop: '12px' }}>
-                <button className="button" style={{ marginRight: '8px' }} onClick={saveEdit}>Salvar</button>
-                <button className="button" style={{ backgroundColor: '#6c757d' }} onClick={cancelEdit}>Cancelar</button>
+              <div style={{ marginTop: '16px', display: 'flex', gap: '12px' }}>
+                <button className="button" onClick={saveEdit}>Salvar</button>
+                <button className="button button-secondary" onClick={cancelEdit}>Cancelar</button>
               </div>
             </div>
           )}
 
           {/* Modal de Confirmação de Exclusão */}
           {showDeleteModal && userToDelete && (
-            <div
-              style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 1001,
-                padding: '20px',
-              }}
-              onClick={handleCancelDelete}
-            >
-              <div
-                style={{
-                  backgroundColor: 'white',
-                  borderRadius: '8px',
-                  padding: '24px',
-                  maxWidth: '500px',
-                  width: '100%',
-                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div style={{ marginBottom: '20px' }}>
-                  <h2 style={{ color: '#dc3545', marginBottom: '12px' }}>⚠️ Confirmar Exclusão</h2>
-                  <p style={{ color: '#666', lineHeight: '1.6' }}>
+            <div className="modal-overlay" onClick={handleCancelDelete}>
+              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-header">
+                  <h2 className="modal-title">Confirmar Exclusão</h2>
+                  <button className="modal-close" onClick={handleCancelDelete}>
+                    ×
+                  </button>
+                </div>
+
+                <div className="modal-body">
+                  <p style={{ color: 'var(--neutral-600)', marginBottom: '16px' }}>
                     Tem certeza que deseja excluir este usuário?
                   </p>
-                  <div
-                    style={{
-                      marginTop: '16px',
-                      padding: '12px',
-                      backgroundColor: '#f8f9fa',
-                      borderRadius: '4px',
-                      borderLeft: '4px solid #dc3545',
-                    }}
-                  >
+
+                  <div className="info-box info-box-danger">
                     <div><strong>Nome:</strong> {userToDelete.name}</div>
                     <div style={{ marginTop: '8px' }}>
                       <strong>Email:</strong> {userToDelete.email}
@@ -306,38 +277,26 @@ function Users() {
                       <strong>Perfil:</strong> {userToDelete.role === 'admin' ? 'Administrador' : 'Usuário'}
                     </div>
                   </div>
-                  <p style={{ color: '#dc3545', marginTop: '16px', fontWeight: 'bold' }}>
-                    Esta ação não pode ser desfeita!
+
+                  <p style={{ color: 'var(--danger-600)', marginTop: '16px', fontWeight: '500', fontSize: '14px' }}>
+                    Esta ação não pode ser desfeita.
                   </p>
                 </div>
 
-                <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+                <div className="modal-footer">
                   <button
                     className="button button-secondary"
                     onClick={handleCancelDelete}
                     disabled={deleting}
                   >
-                    ❌ Cancelar
+                    Cancelar
                   </button>
                   <button
-                    className="button"
+                    className="button button-danger"
                     onClick={handleConfirmDelete}
                     disabled={deleting}
-                    style={{
-                      backgroundColor: '#dc3545',
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!deleting) {
-                        e.currentTarget.style.backgroundColor = '#c82333';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!deleting) {
-                        e.currentTarget.style.backgroundColor = '#dc3545';
-                      }
-                    }}
                   >
-                    {deleting ? '⏳ Excluindo...' : '🗑️ Sim, Excluir'}
+                    {deleting ? 'Excluindo...' : 'Sim, Excluir'}
                   </button>
                 </div>
               </div>
@@ -350,4 +309,3 @@ function Users() {
 }
 
 export default Users;
-

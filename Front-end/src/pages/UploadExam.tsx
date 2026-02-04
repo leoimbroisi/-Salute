@@ -94,29 +94,29 @@ function UploadExam() {
             <label className="label">Arquivo PDF *</label>
             <div
               style={{
-                border: '2px dashed #007bff',
-                borderRadius: '8px',
+                border: '2px dashed var(--neutral-300)',
+                borderRadius: 'var(--radius-md)',
                 padding: '40px 20px',
                 textAlign: 'center',
-                backgroundColor: file ? '#e7f3ff' : '#f8f9fa',
-                transition: 'all 0.3s ease',
+                backgroundColor: file ? 'var(--primary-50)' : 'var(--neutral-50)',
+                transition: 'all 0.2s ease',
                 cursor: 'pointer',
                 marginBottom: '16px',
                 position: 'relative',
               }}
               onDragOver={(e) => {
                 e.preventDefault();
-                e.currentTarget.style.borderColor = '#0056b3';
-                e.currentTarget.style.backgroundColor = '#e7f3ff';
+                e.currentTarget.style.borderColor = 'var(--primary-500)';
+                e.currentTarget.style.backgroundColor = 'var(--primary-50)';
               }}
               onDragLeave={(e) => {
-                e.currentTarget.style.borderColor = '#007bff';
-                e.currentTarget.style.backgroundColor = file ? '#e7f3ff' : '#f8f9fa';
+                e.currentTarget.style.borderColor = 'var(--neutral-300)';
+                e.currentTarget.style.backgroundColor = file ? 'var(--primary-50)' : 'var(--neutral-50)';
               }}
               onDrop={(e) => {
                 e.preventDefault();
-                e.currentTarget.style.borderColor = '#007bff';
-                e.currentTarget.style.backgroundColor = '#e7f3ff';
+                e.currentTarget.style.borderColor = 'var(--neutral-300)';
+                e.currentTarget.style.backgroundColor = 'var(--primary-50)';
                 if (e.dataTransfer.files && e.dataTransfer.files[0]) {
                   if (e.dataTransfer.files[0].type === 'application/pdf') {
                     setFile(e.dataTransfer.files[0]);
@@ -136,24 +136,54 @@ function UploadExam() {
               />
               {file ? (
                 <div>
-                  <div style={{ fontSize: '48px', marginBottom: '12px' }}>📄</div>
-                  <div style={{ fontWeight: 'bold', color: '#007bff', marginBottom: '8px' }}>
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="var(--primary-600)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ marginBottom: '12px' }}
+                  >
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <div style={{ fontWeight: '500', color: 'var(--primary-700)', marginBottom: '8px' }}>
                     {file.name}
                   </div>
-                  <div style={{ color: '#666', fontSize: '14px' }}>
+                  <div style={{ color: 'var(--neutral-500)', fontSize: '14px' }}>
                     {(file.size / 1024 / 1024).toFixed(2)} MB
                   </div>
-                  <div style={{ color: '#666', fontSize: '12px', marginTop: '8px' }}>
+                  <div style={{ color: 'var(--neutral-400)', fontSize: '12px', marginTop: '8px' }}>
                     Clique para selecionar outro arquivo
                   </div>
                 </div>
               ) : (
                 <div>
-                  <div style={{ fontSize: '48px', marginBottom: '12px' }}>📤</div>
-                  <div style={{ fontWeight: 'bold', color: '#007bff', marginBottom: '8px' }}>
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="var(--neutral-400)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ marginBottom: '12px' }}
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <div style={{ fontWeight: '500', color: 'var(--neutral-700)', marginBottom: '8px' }}>
                     Clique para selecionar ou arraste um arquivo PDF
                   </div>
-                  <div style={{ color: '#666', fontSize: '14px' }}>
+                  <div style={{ color: 'var(--neutral-500)', fontSize: '14px' }}>
                     Apenas arquivos PDF são aceitos
                   </div>
                 </div>
@@ -189,34 +219,14 @@ function UploadExam() {
             />
 
             <button type="submit" className="button" disabled={loading} style={{ width: '100%', justifyContent: 'center' }}>
-              {loading ? (
-                <>
-                  <span>⏳</span>
-                  <span>Processando...</span>
-                </>
-              ) : (
-                <>
-                  <span>📤</span>
-                  <span>Enviar PDF</span>
-                </>
-              )}
+              {loading ? 'Processando...' : 'Enviar PDF'}
             </button>
           </form>
 
           {extractedText && (
             <div style={{ marginTop: '24px' }}>
-              <h3>Texto Extraído do PDF (preview):</h3>
-              <div
-                style={{
-                  marginTop: '12px',
-                  padding: '12px',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '4px',
-                  maxHeight: '300px',
-                  overflow: 'auto',
-                  whiteSpace: 'pre-wrap',
-                }}
-              >
+              <h3 style={{ marginBottom: '12px' }}>Texto Extraído do PDF</h3>
+              <div className="data-display">
                 {extractedText}
               </div>
             </div>
@@ -228,4 +238,3 @@ function UploadExam() {
 }
 
 export default UploadExam;
-
